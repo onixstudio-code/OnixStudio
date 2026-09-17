@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Onix Studio | Desarrollo Web & Estrategia Digital</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            onixBg: '#090A0F',
+            onixCard: '#12151E',
+            onixBorder: '#2A2F3D',
+            onixSilver: '#D1D5DB',
+            onixCyan: '#00E5FF',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #090A0F;
+      color: #E5E7EB;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      overflow-x: hidden;
+    }
+    
+    /* Canvas fijo de fondo que interactúa con el mouse */
+    #bg-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 0;
+      pointer-events: none; /* Permite hacer click a los elementos sobre el canvas */
+    }
+
+    /* Asegura que el contenido quede sobre el fondo interactivo */
+    header, section, footer {
+      position: relative;
+      z-index: 10;
+    }
+
+    .circuit-bg {
+      background-image: radial-gradient(rgba(30, 41, 59, 0.4) 1px, transparent 1px);
+      background-size: 24px 24px;
+    }
+    .glow-border {
+      box-shadow: 0 0 15px rgba(0, 229, 255, 0.15);
+    }
+    .glow-border:hover {
+      box-shadow: 0 0 25px rgba(0, 229, 255, 0.35);
+    }
+  </style>
+</head>
+<body class="circuit-bg text-gray-200 antialiased selection:bg-cyan-500 selection:text-black">
+
+  <!-- FONDO ANIMADO INTERACTIVO CON EL MOUSE -->
+  <canvas id="bg-canvas"></canvas>
+
+  <!-- HEADER -->
+  <header class="sticky top-0 z-50 backdrop-blur-md bg-onixBg/80 border-b border-onixBorder">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex justify-between items-center">
+      <!-- Logo + Nombre -->
+      <a href="#" class="flex items-center space-x-3">
+        <img src="Logo.png" alt="Onix Studio Logo" class="h-10 w-auto object-contain">
+        <span class="text-xl sm:text-2xl font-bold tracking-widest text-white uppercase">
+          ONIX <span class="text-xs text-cyan-400 block tracking-normal font-mono">STUDIO</span>
+        </span>
+      </a>
+
+      <!-- Navegación Escritorio -->
+      <nav class="hidden lg:flex space-x-6 text-xs uppercase tracking-wider font-medium text-gray-300">
+        <a href="#servicios-web" class="hover:text-cyan-400 transition-colors">Desarrollo Web</a>
+        <a href="#redes-sociales" class="hover:text-cyan-400 transition-colors">Redes Sociales</a>
+        <a href="#soporte" class="hover:text-cyan-400 transition-colors">Soporte</a>
+        <a href="#servicios-extra" class="hover:text-cyan-400 transition-colors">Especiales</a>
+        <a href="#sobre-onix" class="hover:text-cyan-400 transition-colors">Sobre Onix</a>
+      </nav>
+
+      <!-- Botón Contactar -->
+      <a href="https://wa.me/59891795839" target="_blank" rel="noopener noreferrer" class="bg-transparent border border-cyan-400 text-cyan-400 px-4 py-2 rounded-sm text-xs sm:text-sm font-semibold tracking-wide hover:bg-cyan-400 hover:text-black transition-all duration-300">
+        Contactar
+      </a>
+    </div>
+  </header>
+
+  <!-- HERO SECTION -->
+  <section class="relative py-16 sm:py-24 md:py-32 overflow-hidden border-b border-onixBorder/50">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 text-center relative z-10">
+      <p class="text-cyan-400 font-mono text-sm sm:text-base md:text-lg tracking-widest uppercase mb-4 font-semibold">
+        Desarrollo Web & Marketing Digital
+      </p>
+      <h1 class="text-3xl sm:text-5xl md:text-6xl font-extrabold text-white leading-tight mb-6 tracking-tight">
+        Transformamos tu marca en una infraestructura digital de <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-gray-200 to-slate-400">Alto Impacto</span>
+      </h1>
+      <p class="text-gray-400 text-base sm:text-lg md:text-xl max-w-3xl mx-auto mb-10 leading-relaxed">
+        Creamos ecosistemas digitales para emprendimientos, marcas y empresas. Desde el desarrollo web de alta performance hasta la gestión estratégica de redes sociales.
+      </p>
+      <div class="flex flex-col sm:flex-row justify-center gap-4">
+        <a href="#contacto" class="bg-cyan-400 text-black px-8 py-4 rounded-sm font-bold uppercase tracking-wider hover:bg-cyan-300 transition-all shadow-lg shadow-cyan-500/20 text-center">
+          Iniciar Proyecto
+        </a>
+        <a href="#servicios-web" class="border border-onixBorder bg-onixCard/80 text-white px-8 py-4 rounded-sm font-bold uppercase tracking-wider hover:border-cyan-400/50 transition-all text-center">
+          Explorar Planes
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECCIÓN: DESARROLLO WEB -->
+  <section id="servicios-web" class="py-16 sm:py-20 border-b border-onixBorder/50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="text-center mb-12 sm:mb-16">
+        <h2 class="text-sm sm:text-base md:text-lg font-mono text-cyan-400 uppercase tracking-widest mb-2 font-semibold">Presencia en Línea</h2>
+        <h3 class="text-2xl sm:text-3xl md:text-4xl font-bold text-white uppercase tracking-tight">Planes de Desarrollo Web</h3>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- Plan Base -->
+        <div class="bg-onixCard/90 border border-onixBorder p-6 sm:p-8 rounded-lg flex flex-col justify-between glow-border transition-all text-center backdrop-blur-sm">
+          <div>
+            <h4 class="text-xl font-bold text-white mb-2">Plan Base</h4>
+            <p class="text-gray-400 text-sm leading-relaxed mb-6">Pensado para emprendimientos, profesionales independientes o comercios locales que necesitan una carta de presentación profesional e informar rápido.</p>
+            <hr class="border-onixBorder mb-6">
+            <ul class="space-y-4 text-sm text-gray-300 leading-relaxed">
+              <li>Página única (Landing Page o One-Page) con navegación por secciones integradas</li>
+              <li>Diseño adaptable a celulares y computadoras</li>
+              <li>Botón directo a WhatsApp y formulario de contacto</li>
+              <li>Integración con redes sociales y Google Maps</li>
+            </ul>
+          </div>
+          <a href="#contacto" class="mt-8 block text-center border border-cyan-400/40 text-cyan-400 py-3 rounded-sm font-semibold hover:bg-cyan-400 hover:text-black transition-all">Consultar Plan</a>
+        </div>
+
+        <!-- Plan Pro -->
+        <div class="bg-onixCard/90 border-2 border-cyan-400/60 p-6 sm:p-8 rounded-lg flex flex-col justify-between relative glow-border transition-all text-center backdrop-blur-sm">
+          <span class="absolute -top-3 left-1/2 -translate-x-1/2 bg-cyan-400 text-black text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-sm">Recomendado</span>
+          <div>
+            <h4 class="text-xl font-bold text-white mb-2 mt-2">Plan Pro</h4>
+            <p class="text-gray-400 text-sm leading-relaxed mb-6">Ideal para empresas consolidadas que ofrecen múltiples servicios o productos y necesitan proyectar mayor autoridad.</p>
+            <hr class="border-onixBorder mb-6">
+            <ul class="space-y-4 text-sm text-gray-300 leading-relaxed">
+              <li>Sitio multipágina (Inicio, Nosotros, Servicios, Trabajos/Galería, Contacto)</li>
+              <li>Estructura y copywriting enfocados en conversión de clientes</li>
+              <li>Sección de blog o novedades (si se requiere)</li>
+              <li>Formularios avanzados o reservas simples de citas</li>
+            </ul>
+          </div>
+          <a href="#contacto" class="mt-8 block text-center bg-cyan-400 text-black py-3 rounded-sm font-bold hover:bg-cyan-300 transition-all">Consultar Plan</a>
+        </div>
+
+        <!-- Plan Premium -->
+        <div class="bg-onixCard/90 border border-onixBorder p-6 sm:p-8 rounded-lg flex flex-col justify-between glow-border transition-all text-center backdrop-blur-sm">
+          <div>
+            <h4 class="text-xl font-bold text-white mb-2">Plan Premium</h4>
+            <p class="text-gray-400 text-sm leading-relaxed mb-6">Diseñado para negocios que requieren funcionalidades específicas o una plataforma más robusta para mostrar su oferta.</p>
+            <hr class="border-onixBorder mb-6">
+            <ul class="space-y-4 text-sm text-gray-300 leading-relaxed">
+              <li>Estructura a medida con arquitectura de contenido personalizada</li>
+              <li>Catálogo interactivo de productos o servicios (con/sin pasarela de pagos)</li>
+              <li>Integración de bases de datos o paneles de gestión simple</li>
+              <li>Secciones de usuarios/clientes o contenido exclusivo</li>
+              <li>Prioridad en velocidad, seguridad y optimización técnica</li>
+            </ul>
+          </div>
+          <a href="#contacto" class="mt-8 block text-center border border-cyan-400/40 text-cyan-400 py-3 rounded-sm font-semibold hover:bg-cyan-400 hover:text-black transition-all">Consultar Plan</a>
+        </div>
+      </div>
+
+      <!-- Cotización a la Medida -->
+      <div class="mt-12 bg-gradient-to-r from-onixCard/90 via-slate-900/90 to-onixCard/90 border border-onixBorder p-6 sm:p-8 rounded-lg flex flex-col md:flex-row justify-between items-center text-center md:text-left backdrop-blur-sm">
+        <div>
+          <h4 class="text-xl sm:text-2xl font-bold text-white mb-2">¿Necesitas un desarrollo web a la medida?</h4>
+          <p class="text-gray-400 text-sm leading-relaxed">Evaluamos la complejidad de tus requerimientos, arquitecturas complejas, integraciones e-commerce personalizadas o sistemas empresariales.</p>
+        </div>
+        <a href="#contacto" class="mt-6 md:mt-0 whitespace-nowrap bg-transparent border border-white text-white px-6 py-3 rounded-sm font-semibold hover:bg-white hover:text-black transition-all text-sm">
+          Cotizar Proyecto Especial
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECCIÓN: REDES SOCIALES -->
+  <section id="redes-sociales" class="py-16 sm:py-20 border-b border-onixBorder/50 bg-onixBg/50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="text-center mb-12 sm:mb-16">
+        <h2 class="text-sm sm:text-base md:text-lg font-mono text-cyan-400 uppercase tracking-widest mb-2 font-semibold">Estrategia & Contenido</h2>
+        <h3 class="text-2xl sm:text-3xl md:text-4xl font-bold text-white uppercase tracking-tight">Planes de Gestión de Redes Sociales</h3>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- Plan Inicial -->
+        <div class="bg-onixCard/90 border border-onixBorder p-6 sm:p-8 rounded-lg flex flex-col justify-between text-center backdrop-blur-sm">
+          <div>
+            <h4 class="text-xl font-bold text-white mb-2">Plan Inicial</h4>
+            <p class="text-gray-400 text-sm leading-relaxed mb-6">Pensado para marcas que recién empiezan o negocios locales que solo necesitan mantener sus perfiles activos y prolijos sin invertir de más.</p>
+            <hr class="border-onixBorder mb-6">
+            <ul class="space-y-4 text-sm text-gray-300 leading-relaxed">
+              <li><strong>Redes:</strong> 1 o 2 plataformas (ej. Instagram y Facebook)</li>
+              <li><strong>Publicaciones:</strong> 2 post/semana (8 a 10 post al mes)</li>
+              <li>Diseño gráfico profesional adaptado a la marca</li>
+              <li>Redacción (copywriting)</li>
+              <li>Investigación de hashtags locales estratégicos</li>
+              <li>Programación en mejores horarios y optimización de perfil</li>
+            </ul>
+          </div>
+          <a href="#contacto" class="mt-8 block text-center border border-cyan-400/40 text-cyan-400 py-3 rounded-sm font-semibold hover:bg-cyan-400 hover:text-black transition-all">Solicitar Plan</a>
+        </div>
+
+        <!-- Plan Crecimiento -->
+        <div class="bg-onixCard/90 border border-onixBorder p-6 sm:p-8 rounded-lg flex flex-col justify-between text-center backdrop-blur-sm">
+          <div>
+            <h4 class="text-xl font-bold text-white mb-2">Plan Crecimiento</h4>
+            <p class="text-gray-400 text-sm leading-relaxed mb-6">Ideal para empresas o profesionales que buscan generar mayor alcance, interacción y mostrar el "detrás de escena".</p>
+            <hr class="border-onixBorder mb-6">
+            <ul class="space-y-4 text-sm text-gray-300 leading-relaxed">
+              <li><strong>Redes:</strong> 2 plataformas (ej. Instagram y TikTok/Facebook)</li>
+              <li><strong>Publicaciones:</strong> 3 a 4 post/semana (12 a 16 piezas)</li>
+              <li><strong>Formato Mixto:</strong> Incluye Reels/TikToks editados + carruseles</li>
+              <li><strong>Stories:</strong> 2 a 3 secuencias semanales de engagement</li>
+              <li>Moderación de comentarios y DMs en horario laboral</li>
+              <li>Informe mensual básico de métricas y crecimiento</li>
+            </ul>
+          </div>
+          <a href="#contacto" class="mt-8 block text-center border border-cyan-400/40 text-cyan-400 py-3 rounded-sm font-semibold hover:bg-cyan-400 hover:text-black transition-all">Solicitar Plan</a>
+        </div>
+
+        <!-- Plan Pro / Dominio -->
+        <div class="bg-onixCard/90 border border-onixBorder p-6 sm:p-8 rounded-lg flex flex-col justify-between text-center backdrop-blur-sm">
+          <div>
+            <h4 class="text-xl font-bold text-white mb-2">Plan Pro / Dominio</h4>
+            <p class="text-gray-400 text-sm leading-relaxed mb-6">Diseñado para negocios consolidados que buscan vender activamente, posicionar marca y generar lanzamientos recurrentes.</p>
+            <hr class="border-onixBorder mb-6">
+            <ul class="space-y-4 text-sm text-gray-300 leading-relaxed">
+              <li><strong>Redes:</strong> 2 o 3 plataformas</li>
+              <li><strong>Publicaciones:</strong> 5 post/semana o contenido diario</li>
+              <li>Calendario editorial por objetivos (Venta, Educar, Testimonios)</li>
+              <li>Gestión activa y derivación de ventas a Web/WhatsApp</li>
+              <li>Reporte analítico detallado + reunión mensual de estrategia</li>
+            </ul>
+          </div>
+          <a href="#contacto" class="mt-8 block text-center border border-cyan-400/40 text-cyan-400 py-3 rounded-sm font-semibold hover:bg-cyan-400 hover:text-black transition-all">Solicitar Plan</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECCIÓN: SOPORTE WEB Y PACK COMBINADO -->
+  <section id="soporte" class="py-16 sm:py-20 border-b border-onixBorder/50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 items-stretch">
+      
+      <!-- Soporte Mensual Web -->
+      <div class="bg-onixCard/90 border border-onixBorder p-6 sm:p-8 rounded-lg flex flex-col justify-between text-center backdrop-blur-sm">
+        <div>
+          <h3 class="text-2xl font-bold text-white mb-2">Soporte Mantenimiento Web Mensual</h3>
+          <p class="text-gray-400 text-sm leading-relaxed mb-6">Garantiza la estabilidad, velocidad y protección continua de tu sitio web sin preocupaciones técnicas.</p>
+          <hr class="border-onixBorder mb-6">
+          <ul class="space-y-4 text-sm text-gray-300 leading-relaxed">
+            <li><strong>Soporte Técnico:</strong> Actualización de plataformas, plugins y dependencias.</li>
+            <li><strong>Copias de Seguridad (Backups):</strong> Respaldos periódicos de archivos y base de datos.</li>
+            <li><strong>Seguridad & Monitorización:</strong> Protección constante contra caídas y vulnerabilidades.</li>
+            <li><strong>Modificaciones Menores:</strong> Cupo mensual para actualizar textos, imágenes o servicios.</li>
+            <li><strong>Renovación de Infraestructura:</strong> Gestión experta de tu dominio y hosting.</li>
+          </ul>
+        </div>
+        <a href="#contacto" class="mt-8 block text-center border border-cyan-400/40 text-cyan-400 py-3 rounded-sm font-semibold hover:bg-cyan-400 hover:text-black transition-all">
+          Contratar Soporte
+        </a>
+      </div>
+
+      <!-- Pack Combinado -->
+      <div class="bg-gradient-to-br from-slate-900/90 via-onixCard/90 to-cyan-950/50 border-2 border-cyan-400/50 p-6 sm:p-8 rounded-lg flex flex-col justify-between relative text-center backdrop-blur-sm">
+        <div>
+          <span class="inline-block bg-cyan-400 text-black text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-sm mb-4">Estrategia Integral</span>
+          <h3 class="text-2xl sm:text-3xl font-bold text-white mb-4">Pack Combinado (Web + Redes)</h3>
+          <p class="text-gray-300 text-sm leading-relaxed mb-6">
+            Combina cualquier Plan de Desarrollo Web con un Plan de Redes Sociales para asegurar el canal de atracción y el canal de conversión de tu negocio en simultáneo.
+          </p>
+          <div class="bg-onixBg/80 p-4 rounded border border-onixBorder mb-6">
+            <p class="text-cyan-400 text-sm font-semibold mb-1">Beneficio Exclusivo:</p>
+            <p class="text-gray-400 text-xs leading-relaxed">Accede a un descuento especial al unificar ambos servicios bajo una misma estrategia de marca sincronizada.</p>
+          </div>
+        </div>
+        <a href="#contacto" class="block text-center bg-cyan-400 text-black py-3 rounded-sm font-bold uppercase tracking-wider hover:bg-cyan-300 transition-all shadow-lg shadow-cyan-500/20">
+          Solicitar Pack Combinado
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SECCIÓN: SERVICIOS INDEPENDIENTES -->
+  <section id="servicios-extra" class="py-16 sm:py-20 border-b border-onixBorder/50 bg-onixBg/50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="text-center mb-12 sm:mb-16">
+        <h2 class="text-sm sm:text-base md:text-lg font-mono text-cyan-400 uppercase tracking-widest mb-2 font-semibold">Servicios Adicionales</h2>
+        <h3 class="text-2xl sm:text-3xl md:text-4xl font-bold text-white uppercase tracking-tight">Servicios Independientes</h3>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="bg-onixCard/90 border border-onixBorder p-6 rounded-lg text-center backdrop-blur-sm">
+          <h4 class="text-lg font-bold text-white mb-2">Meta Ads & Google Ads</h4>
+          <p class="text-gray-400 text-xs leading-relaxed">Configuración y gestión de campañas de anuncios pagos para atraer tráfico calificado a la web o consultas directas a WhatsApp.</p>
+        </div>
+
+        <div class="bg-onixCard/90 border border-onixBorder p-6 rounded-lg text-center backdrop-blur-sm">
+          <h4 class="text-lg font-bold text-white mb-2">Identidad Visual</h4>
+          <p class="text-gray-400 text-xs leading-relaxed">Creación o adaptación de logo, paleta de colores y tipografías para unificar y profesionalizar la imagen de tu marca.</p>
+        </div>
+
+        <div class="bg-onixCard/90 border border-onixBorder p-6 rounded-lg text-center backdrop-blur-sm">
+          <h4 class="text-lg font-bold text-white mb-2">Redacción (Copywriting)</h4>
+          <p class="text-gray-400 text-xs leading-relaxed">Creación de textos creativos y personalizados enfocados directamente en la venta, persuasión y conversión de clientes.</p>
+        </div>
+
+        <div class="bg-onixCard/90 border border-onixBorder p-6 rounded-lg text-center backdrop-blur-sm">
+          <h4 class="text-lg font-bold text-white mb-2">Plantillas Editables (Canva Kit)</h4>
+          <p class="text-gray-400 text-xs leading-relaxed">Diseño de plantillas personalizadas con la identidad de tu marca para que publiques de forma autónoma con coherencia gráfica.</p>
+        </div>
+
+        <div class="bg-onixCard/90 border border-onixBorder p-6 rounded-lg text-center backdrop-blur-sm">
+          <h4 class="text-lg font-bold text-white mb-2">Portadas para Highlights</h4>
+          <p class="text-gray-400 text-xs leading-relaxed">Diseño de portadas y organización estratégica de Historias Destacadas (Precios, FAQs, Reseñas) en tu perfil de Instagram.</p>
+        </div>
+
+        <div class="bg-onixCard/90 border border-onixBorder p-6 rounded-lg text-center backdrop-blur-sm">
+          <h4 class="text-lg font-bold text-white mb-2">Rediseño de Redes & Web</h4>
+          <p class="text-gray-400 text-xs leading-relaxed">Modernización de sitios web antiguos o lentos e informes puntuales de optimización estratégica para tus perfiles sociales.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECCIÓN: SOBRE ONIX + PORTFOLIO -->
+  <section id="sobre-onix" class="py-16 sm:py-20 border-b border-onixBorder/50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      
+      <!-- Sobre mí / Contexto en Plural -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center mb-16">
+        <div class="lg:col-span-7 text-center lg:text-left">
+          <h2 class="text-sm sm:text-base md:text-lg font-mono text-cyan-400 uppercase tracking-widest mb-2 font-semibold">Detrás de Onix Studio</h2>
+          <h3 class="text-2xl sm:text-3xl font-bold text-white mb-6">Ingeniería sólida aplicada al crecimiento de tu negocio</h3>
+          <p class="text-gray-300 text-sm leading-relaxed mb-4">
+            Contamos con más de 9 años de experiencia en desarrollo de software para entornos corporativos, diseñando soluciones robustas, eficientes y escalables. Decidimos fundar <strong>Onix Studio</strong> para volcar todo ese estándar técnico de nivel profesional en proyectos más dinámicos y variados: acompañando a comercios, startups y empresas en su transformación digital.
+          </p>
+          <p class="text-gray-300 text-sm leading-relaxed mb-6">
+            Nuestro objetivo es potenciar negocios mediante estructuras digitales sólidas, asegurando que tu sitio web no sea solo una página decorativa, sino una herramienta técnica optimizada que convierta visitas en clientes reales.
+          </p>
+          <div class="grid grid-cols-2 gap-4 border-t border-onixBorder pt-6 text-center lg:text-left">
+            <div>
+              <span class="block text-xl sm:text-2xl font-bold text-white">+9 Años</span>
+              <span class="text-xs text-gray-400">Experiencia en Software Corporativo</span>
+            </div>
+            <div>
+              <span class="block text-xl sm:text-2xl font-bold text-cyan-400">Enfoque 360°</span>
+              <span class="text-xs text-gray-400">Código, Estrategia & UI/UX</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="lg:col-span-5 bg-onixCard/90 border border-onixBorder p-6 sm:p-8 rounded-lg relative text-center backdrop-blur-sm">
+          <div class="hidden sm:block absolute -top-3 -left-3 w-6 h-6 border-t-2 border-l-2 border-cyan-400"></div>
+          <div class="hidden sm:block absolute -bottom-3 -right-3 w-6 h-6 border-b-2 border-r-2 border-cyan-400"></div>
+          <h4 class="text-lg font-bold text-white mb-4">¿Qué hacemos en Onix?</h4>
+          <p class="text-gray-400 text-xs leading-relaxed mb-4">
+            En Onix unificamos la precisión de la ingeniería de software con la creatividad del diseño UX/UI y la efectividad del marketing de contenidos.
+          </p>
+          <p class="text-gray-400 text-xs leading-relaxed">
+            Construimos tu infraestructura en la web y gestionamos tu presencia en redes sociales para que tu marca proyecte autoridad absoluta en su rubro.
+          </p>
+        </div>
+      </div>
+
+      <!-- PORTFOLIO SECTION -->
+      <div>
+        <div class="text-center mb-10">
+          <h3 class="text-xl font-bold text-white uppercase tracking-wider">Proyectos Destacados</h3>
+          <p class="text-xs text-gray-400 mt-1">Una muestra visual de nuestras soluciones digitales y diseños</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div class="group relative bg-onixCard/90 border border-onixBorder rounded overflow-hidden aspect-video flex items-center justify-center">
+            <div class="text-center p-4">
+              <span class="text-xs text-cyan-400 font-mono block mb-1">[ Captura de Proyecto / Imagen ]</span>
+              <span class="text-sm text-gray-300 font-medium">Plataforma Web Corporativa</span>
+            </div>
+            <div class="absolute inset-0 bg-cyan-950/80 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+              <span class="text-xs font-bold text-white uppercase tracking-widest border border-white px-4 py-2">Ver Proyecto</span>
+            </div>
+          </div>
+
+          <div class="group relative bg-onixCard/90 border border-onixBorder rounded overflow-hidden aspect-video flex items-center justify-center">
+            <div class="text-center p-4">
+              <span class="text-xs text-cyan-400 font-mono block mb-1">[ Captura de Proyecto / Imagen ]</span>
+              <span class="text-sm text-gray-300 font-medium">E-Commerce & Catálogo Digital</span>
+            </div>
+            <div class="absolute inset-0 bg-cyan-950/80 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+              <span class="text-xs font-bold text-white uppercase tracking-widest border border-white px-4 py-2">Ver Proyecto</span>
+            </div>
+          </div>
+
+          <div class="group relative bg-onixCard/90 border border-onixBorder rounded overflow-hidden aspect-video flex items-center justify-center">
+            <div class="text-center p-4">
+              <span class="text-xs text-cyan-400 font-mono block mb-1">[ Captura de Proyecto / Imagen ]</span>
+              <span class="text-sm text-gray-300 font-medium">Estrategia de Redes & Branding</span>
+            </div>
+            <div class="absolute inset-0 bg-cyan-950/80 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+              <span class="text-xs font-bold text-white uppercase tracking-widest border border-white px-4 py-2">Ver Proyecto</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SECCIÓN FINAL: CONTACTO Y FORMULARIO -->
+  <section id="contacto" class="py-16 sm:py-20">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6">
+      <div class="text-center mb-12">
+        <h2 class="text-2xl sm:text-4xl md:text-5xl font-extrabold text-white mb-4">Cuéntame de nuestro próximo proyecto</h2>
+        <p class="text-gray-400 text-sm leading-relaxed">Estamos listos para transformar la presencia digital de tu empresa. Escríbenos directamente o déjanos un mensaje.</p>
+        <p class="text-cyan-400 font-semibold text-base sm:text-lg mt-4">WhatsApp Directo: +598 91 795 839</p>
+      </div>
+
+      <form class="bg-onixCard/90 border border-onixBorder p-6 sm:p-8 rounded-lg space-y-6 glow-border backdrop-blur-sm">
+        <div>
+          <label class="block text-xs font-mono text-gray-300 uppercase mb-2">Nombre completo</label>
+          <input type="text" placeholder="Ej. Juan Pérez" class="w-full bg-onixBg border border-onixBorder rounded p-3 text-sm text-white focus:outline-none focus:border-cyan-400">
+        </div>
+
+        <div>
+          <label class="block text-xs font-mono text-gray-300 uppercase mb-2">Contacto (Teléfono o Email)</label>
+          <input type="text" placeholder="ejemplo@correo.com o +598..." class="w-full bg-onixBg border border-onixBorder rounded p-3 text-sm text-white focus:outline-none focus:border-cyan-400">
+        </div>
+
+        <div>
+          <label class="block text-xs font-mono text-gray-300 uppercase mb-2">Descripción del Proyecto</label>
+          <textarea rows="5" placeholder="Cuéntanos brevemente sobre tu negocio, necesidades de web o gestión de redes sociales..." class="w-full bg-onixBg border border-onixBorder rounded p-3 text-sm text-white focus:outline-none focus:border-cyan-400"></textarea>
+        </div>
+
+        <button type="submit" class="w-full bg-cyan-400 text-black font-bold uppercase tracking-wider py-4 rounded-sm hover:bg-cyan-300 transition-all shadow-lg shadow-cyan-500/20">
+          Enviar Propuesta
+        </button>
+      </form>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-onixBorder bg-onixBg py-12 text-xs text-gray-400">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 grid grid-cols-1 md:grid-cols-3 gap-8 items-center text-center md:text-left">
+      <div class="flex flex-col items-center md:items-start">
+        <div class="flex items-center space-x-3 mb-2">
+          <img src="Logo.png" alt="Onix Studio Logo" class="h-8 w-auto object-contain">
+          <span class="text-lg font-bold text-white tracking-widest uppercase">ONIX <span class="text-cyan-400">STUDIO</span></span>
+        </div>
+        <p class="text-gray-500">Desarrollo Web & Marketing Digital Estratégico.</p>
+        <p class="mt-1">&copy; Todos los derechos reservados.</p>
+      </div>
+
+      <div class="space-y-2">
+        <p><strong class="text-gray-300">Contacto:</strong> +598 91 795 839</p>
+        <p><strong class="text-gray-300">Email:</strong> onixstudio.uy@gmail.com</p>
+        <p><strong class="text-gray-300">Instagram:</strong> @onixstudio.uy</p>
+      </div>
+
+      <div class="md:text-right space-y-1">
+        <p class="text-gray-300 font-semibold">Ubicación</p>
+        <p>Minas - Maldonado, Uruguay</p>
+        <p class="text-cyan-400 font-mono">(Servicios Remotos)</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- SCRIPT PARA EL FONDO ANIMADO DE NODOS WEB E INTERACCIÓN CON EL MOUSE -->
+  <script>
+    const canvas = document.getElementById('bg-canvas');
+    const ctx = canvas.getContext('2d');
+
+    let width, height;
+    let particles = [];
+    
+    // Configuración de la interacción con el mouse
+    const mouse = {
+      x: null,
+      y: null,
+      radius: 170 // Radio de reacción de las partículas alrededor del cursor
+    };
+
+    window.addEventListener('mousemove', (e) => {
+      mouse.x = e.clientX;
+      mouse.y = e.clientY;
+    });
+
+    window.addEventListener('mouseleave', () => {
+      mouse.x = null;
+      mouse.y = null;
+    });
+
+    function resize() {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+      initParticles();
+    }
+
+    class Particle {
+      constructor() {
+        this.x = Math.random() * width;
+        this.y = Math.random() * height;
+        this.vx = (Math.random() - 0.5) * 0.8;
+        this.vy = (Math.random() - 0.5) * 0.8;
+        this.radius = Math.random() * 1.8 + 1;
+        this.baseX = this.x;
+        this.baseY = this.y;
+      }
+
+      update() {
+        // Movimiento constante base
+        this.x += this.vx;
+        this.y += this.vy;
+
+        // Rebote en bordes
+        if (this.x < 0 || this.x > width) this.vx *= -1;
+        if (this.y < 0 || this.y > height) this.vy *= -1;
+
+        // Reacción al mouse (repulsión suave)
+        if (mouse.x !== null && mouse.y !== null) {
+          let dx = mouse.x - this.x;
+          let dy = mouse.y - this.y;
+          let distance = Math.sqrt(dx * dx + dy * dy);
+          
+          if (distance < mouse.radius) {
+            let forceDirectionX = dx / distance;
+            let forceDirectionY = dy / distance;
+            let force = (mouse.radius - distance) / mouse.radius;
+            let directionX = forceDirectionX * force * 3;
+            let directionY = forceDirectionY * force * 3;
+
+            this.x -= directionX;
+            this.y -= directionY;
+          }
+        }
+      }
+
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        ctx.fillStyle = '#00E5FF';
+        ctx.shadowBlur = 8;
+        ctx.shadowColor = '#00E5FF';
+        ctx.fill();
+        ctx.shadowBlur = 0; // Reset
+      }
+    }
+
+    function initParticles() {
+      particles = [];
+      // Cantidad de nodos según la resolución de la pantalla
+      const particleCount = Math.floor((width * height) / 11000);
+      for (let i = 0; i < particleCount; i++) {
+        particles.push(new Particle());
+      }
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, width, height);
+
+      // Dibujar líneas entre nodos cercanos y hacia el mouse
+      for (let a = 0; a < particles.length; a++) {
+        particles[a].update();
+        particles[a].draw();
+
+        // Conectar partícula con partícula
+        for (let b = a + 1; b < particles.length; b++) {
+          let dx = particles[a].x - particles[b].x;
+          let dy = particles[a].y - particles[b].y;
+          let dist = Math.sqrt(dx * dx + dy * dy);
+
+          if (dist < 130) {
+            let opacity = 1 - (dist / 130);
+            ctx.strokeStyle = `rgba(0, 229, 255, ${opacity * 0.25})`;
+            ctx.lineWidth = 0.8;
+            ctx.beginPath();
+            ctx.moveTo(particles[a].x, particles[a].y);
+            ctx.lineTo(particles[b].x, particles[b].y);
+            ctx.stroke();
+          }
+        }
+
+        // Conectar partícula directamente con el ratón si está cerca
+        if (mouse.x !== null && mouse.y !== null) {
+          let dx = particles[a].x - mouse.x;
+          let dy = particles[a].y - mouse.y;
+          let dist = Math.sqrt(dx * dx + dy * dy);
+
+          if (dist < mouse.radius) {
+            let opacity = 1 - (dist / mouse.radius);
+            ctx.strokeStyle = `rgba(0, 229, 255, ${opacity * 0.5})`;
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(particles[a].x, particles[a].y);
+            ctx.lineTo(mouse.x, mouse.y);
+            ctx.stroke();
+          }
+        }
+      }
+
+      requestAnimationFrame(animate);
+    }
+
+    window.addEventListener('resize', resize);
+    resize();
+    animate();
+  </script>
+
+</body>
+</html>
